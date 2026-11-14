@@ -73,3 +73,12 @@ anon key 本来就是公开的，数据靠 `schema.sql` 里的权限规则保护
 - 每个人的数据只有本人能读写（数据库行级权限），你作为管理员也看不到别人的档案。
 - 匿名研究默认关闭，打开后只分享年龄段、性别和化验数值。
 - AI 密钥只存在 Supabase 服务器上，不会出现在网页里。
+
+## 邀请新家人后（重要）
+Supabase 把「已邀请但还没点邀请链接」的账号当作未注册，这时在网站上输入邮箱会提示 "Signups not allowed"。
+对方点邀请邮件里的链接就能解决。也可以在 SQL Editor 直接确认邮箱：
+
+```sql
+update auth.users set email_confirmed_at = now()
+where email_confirmed_at is null and email = '新家人的邮箱';
+```
